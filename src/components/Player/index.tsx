@@ -73,10 +73,11 @@ export function Player() {
       {episode ? (
         <div className={styles.currentEpisode}>
           <Image
-            width={592}
-            height={592}
+            width={392}
+            height={392}
             src={episode.thumbnail}
             objectFit="cover"
+            className={styles.teste}
           />
           <strong>{episode.title}</strong>
           <span>{episode.members}</span>
@@ -100,7 +101,7 @@ export function Player() {
               handleStyle={{ borderColor: "#04d361", borderWidth: 4 }}
             />
           ) : (
-            <div className={styles.empySlider} />
+            <div className={styles.emptySlider} />
           )}
           <span>{convertDurationToTimeString(episode?.duration ?? 0)}</span>
         </div>

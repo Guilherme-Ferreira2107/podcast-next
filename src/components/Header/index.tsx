@@ -1,4 +1,10 @@
+// Format Date
+import { useState } from "react";
+
+// Styles
 import styles from "./styles.module.scss";
+
+// Format Date
 import format from "date-fns/format";
 import ptBR from "date-fns/locale/pt-BR";
 

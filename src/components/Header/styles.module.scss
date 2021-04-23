@@ -17,3 +17,34 @@
     text-transform: capitalize;
   }
 }
+
+.containerTheme {
+  width: 50px;
+  height: 25px;
+  background: var(--gray-100);
+  border-radius: 2rem;
+  margin-left: 1rem;
+  position: relative;
+  cursor: pointer;
+
+  & div {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: 0.2rem;
+
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  .light {
+    background: var(--gray-800);
+    right: 0.25em;
+  }
+
+  .dark {
+    background: var(--gray-200);
+    left: 0.25em;
+  }
+}
