@@ -17,7 +17,6 @@
       border: 0;
       position: absolute;
       z-index: 5;
-
       font-size: 0;
 
       transition: filter 0.2s;
@@ -25,8 +24,8 @@
       &:first-child {
         left: 0;
         top: 50%;
-        background: var(--purple-500);
         transform: translate(-50%, -50%);
+        background: var(--purple-500);
       }
 
       &:last-child {
@@ -35,6 +34,7 @@
         background: var(--green-500);
         transform: translate(50%, -50%);
       }
+
       &:hover {
         filter: brightness(0.9);
       }

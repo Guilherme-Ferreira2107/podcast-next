@@ -1,17 +1,27 @@
+import { format, parseISO } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import { format, parseISO } from "date-fns";
-
+import Link from "next/link";
 import { api } from "../../services/api";
-import ptBR from "date-fns/locale/pt-BR";
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
-import { IEpisode } from "../../models/Episode";
 
 import styles from "./episode.module.scss";
-import Link from "next/link";
+
+type Episode = {
+  id: string;
+  title: string;
+  thumbnail: string;
+  members: string;
+  duration: number;
+  durationAsString: string;
+  url: string;
+  publishedAt: string;
+  description: string;
+};
 
 type EpisodeProps = {
-  episode: IEpisode;
+  episode: Episode;
 };
 
 export default function Episode({ episode }: EpisodeProps) {
@@ -20,17 +30,16 @@ export default function Episode({ episode }: EpisodeProps) {
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button type="button">
-            <img src="/arrow-left.svg" alt="voltar" />
+            <img src="/arrow-left.svg" alt="Voltar" />
           </button>
         </Link>
         <Image
           width={700}
           height={160}
           src={episode.thumbnail}
-          alt={episode.title}
           objectFit="cover"
         />
-        <button>
+        <button type="button">
           <img src="/play.svg" alt="Tocar episódio" />
         </button>
       </div>
@@ -51,8 +60,24 @@ export default function Episode({ episode }: EpisodeProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await api.get("episodes", {
+    params: {
+      _limit: 12,
+      _sort: "publised_at",
+      _order: "desc",
+    },
+  });
+
+  const paths = data.map((episode) => {
+    return {
+      params: {
+        slug: episode.id,
+      },
+    };
+  });
+
   return {
-    paths: [],
+    paths,
     fallback: "blocking",
   };
 };
@@ -60,7 +85,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api.get(`episodes/${slug}`);
+  const { data } = await api.get(`/episodes/${slug}`);
 
   const episode = {
     id: data.id,
